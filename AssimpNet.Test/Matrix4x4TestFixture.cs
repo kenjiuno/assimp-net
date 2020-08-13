@@ -35,9 +35,9 @@ namespace Assimp.Test
             float[] values = new float[] { 1.0f, 2.0f, 3.0f, 5.0f, 0.0f, -5.0f, .5f, 100.25f, .3f, .35f, .025f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 
             Matrix4x4 m = Matrix4x4.Identity;
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for(int j = 0; j < 4; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     float value = values[(i * 4) + j];
                     //Matrix indices are one-based.
@@ -59,8 +59,8 @@ namespace Assimp.Test
             Assert.IsFalse(m1.Equals(m3), "Test IEquatable equals");
 
             //Test object equals override
-            Assert.IsTrue(m1.Equals((object) m2), "Tests object equals");
-            Assert.IsFalse(m1.Equals((object) m3), "Tests object equals");
+            Assert.IsTrue(m1.Equals((object)m2), "Tests object equals");
+            Assert.IsFalse(m1.Equals((object)m3), "Tests object equals");
 
             //Test op equals
             Assert.IsTrue(m1 == m2, "Testing OpEquals");
@@ -186,7 +186,7 @@ namespace Assimp.Test
             float y = 2.0f;
             float z = 3.0f;
 
-            TK.Matrix4 tkM = TK.Matrix4.Scale(x, y, z);
+            TK.Matrix4 tkM = TK.Matrix4.CreateScale(x, y, z);
             Matrix4x4 m = Matrix4x4.FromScaling(new Vector3D(x, y, z));
 
             TestHelper.AssertEquals(tkM, m, "Testing from scaling");

@@ -55,8 +55,8 @@ namespace Assimp.Test
             Assert.IsFalse(c1.Equals(c3), "Test IEquatable equals");
 
             //Test object equals override
-            Assert.IsTrue(c1.Equals((object) c2), "Tests object equals");
-            Assert.IsFalse(c1.Equals((object) c3), "Tests object equals");
+            Assert.IsTrue(c1.Equals((object)c2), "Tests object equals");
+            Assert.IsFalse(c1.Equals((object)c3), "Tests object equals");
 
             //Test op equals
             Assert.IsTrue(c1 == c2, "Testing OpEquals");

@@ -68,7 +68,7 @@ namespace Assimp.Test
 
             AssimpContext importer = new AssimpContext();
             importer.SetIOSystem(ioSystem);
-            Assert.Throws<AssimpException>(delegate()
+            Assert.Throws<AssimpException>(delegate ()
             {
                 importer.ImportFile(fileName, PostProcessSteps.None);
             });

@@ -35,9 +35,9 @@ namespace Assimp.Test
             float[] values = new float[] { 1.0f, 2.0f, 3.0f, 0.0f, -5.0f, .5f, .3f, .35f, .025f };
 
             Matrix3x3 m = Matrix3x3.Identity;
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
-                for(int j = 0; j < 3; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     float value = values[(i * 3) + j];
                     //Matrix indices are one-based.
@@ -59,8 +59,8 @@ namespace Assimp.Test
             Assert.IsFalse(m1.Equals(m3), "Test IEquatable equals");
 
             //Test object equals override
-            Assert.IsTrue(m1.Equals((object) m2), "Tests object equals");
-            Assert.IsFalse(m1.Equals((object) m3), "Tests object equals");
+            Assert.IsTrue(m1.Equals((object)m2), "Tests object equals");
+            Assert.IsFalse(m1.Equals((object)m3), "Tests object equals");
 
             //Test op equals
             Assert.IsTrue(m1 == m2, "Testing OpEquals");
@@ -149,7 +149,7 @@ namespace Assimp.Test
             float y = 2.0f;
             float z = 3.0f;
 
-            TK.Matrix4 tkM = TK.Matrix4.Scale(x, y, z);
+            TK.Matrix4 tkM = TK.Matrix4.CreateScale(x, y, z);
             Matrix3x3 m = Matrix3x3.FromScaling(new Vector3D(x, y, z));
 
             TestHelper.AssertEquals(tkM, m, "Testing from scaling");
@@ -173,7 +173,7 @@ namespace Assimp.Test
             Vector3D axis = new Vector3D(.25f, .5f, 0.0f);
             axis.Normalize();
 
-            float angle = (float) Math.PI;
+            float angle = (float)Math.PI;
 
             Quaternion q = new Quaternion(axis, angle);
             Matrix3x3 m = q.GetMatrix();

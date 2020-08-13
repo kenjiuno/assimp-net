@@ -50,7 +50,7 @@ namespace Assimp.Test
             Assert.IsNotNull(blob2);
             Assert.IsTrue(blob.Data.Length == blob.Data.Length);
 
-            if(blob.NextBlob != null)
+            if (blob.NextBlob != null)
             {
                 Assert.IsTrue(blob2.NextBlob != null);
                 Assert.IsTrue(blob2.NextBlob.Name.Equals(blob.NextBlob.Name));

@@ -64,8 +64,8 @@ namespace Assimp.Test
             Assert.IsFalse(v1.Equals(v3), "Test IEquatable equals");
 
             //Test object equals override
-            Assert.IsTrue(v1.Equals((object) v2), "Tests object equals");
-            Assert.IsFalse(v1.Equals((object) v3), "Tests object equals");
+            Assert.IsTrue(v1.Equals((object)v2), "Tests object equals");
+            Assert.IsFalse(v1.Equals((object)v3), "Tests object equals");
 
             //Test op equals
             Assert.IsTrue(v1 == v2, "Testing OpEquals");
@@ -82,7 +82,7 @@ namespace Assimp.Test
             float x = -62, y = 5;
 
             Vector2D v = new Vector2D(x, y);
-            Assert.AreEqual((float) Math.Sqrt(x * x + y * y), v.Length(), "Testing v.Length()");
+            Assert.AreEqual((float)Math.Sqrt(x * x + y * y), v.Length(), "Testing v.Length()");
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace Assimp.Test
             float x = -5, y = 25f;
 
             Vector2D v = new Vector2D(x, y);
-            Assert.AreEqual((float) (x * x + y * y), v.LengthSquared(), "Testing v.LengthSquared()");
+            Assert.AreEqual((float)(x * x + y * y), v.LengthSquared(), "Testing v.LengthSquared()");
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Assimp.Test
             float x = 5, y = 12;
             Vector2D v = new Vector2D(x, y);
             v.Normalize();
-            float invLength = 1.0f / (float) System.Math.Sqrt((x * x) + (y * y));
+            float invLength = 1.0f / (float)System.Math.Sqrt((x * x) + (y * y));
             x *= invLength;
             y *= invLength;
 

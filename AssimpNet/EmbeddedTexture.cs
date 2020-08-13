@@ -198,7 +198,7 @@ namespace Assimp
             m_height = height;
             m_nonCompressedData = uncompressedData;
 
-            if((m_width * m_height) == NonCompressedDataSize)
+            if ((m_width * m_height) == NonCompressedDataSize)
                 throw new ArgumentException("Texel data size does not match width * height.");
 
             m_isCompressed = false;
@@ -223,24 +223,24 @@ namespace Assimp
         /// <param name="nativeValue">Output native value</param>
         void IMarshalable<EmbeddedTexture, AiTexture>.ToNative(IntPtr thisPtr, out AiTexture nativeValue)
         {
-            if(IsCompressed)
+            if (IsCompressed)
             {
-                nativeValue.Width = (uint) CompressedDataSize;
+                nativeValue.Width = (uint)CompressedDataSize;
                 nativeValue.Height = 0;
                 nativeValue.Data = IntPtr.Zero;
 
-                if(CompressedDataSize > 0)
+                if (CompressedDataSize > 0)
                     nativeValue.Data = MemoryHelper.ToNativeArray<byte>(m_compressedData);
 
                 nativeValue.SetFormatHint(m_compressedFormatHint);
             }
             else
             {
-                nativeValue.Width = (uint) m_width;
-                nativeValue.Height = (uint) m_height;
+                nativeValue.Width = (uint)m_width;
+                nativeValue.Height = (uint)m_height;
                 nativeValue.Data = IntPtr.Zero;
 
-                if(NonCompressedDataSize > 0)
+                if (NonCompressedDataSize > 0)
                     nativeValue.Data = MemoryHelper.ToNativeArray<Texel>(m_nonCompressedData);
 
                 nativeValue.SetFormatHint(null);
@@ -255,15 +255,15 @@ namespace Assimp
         {
             m_isCompressed = nativeValue.Height == 0;
 
-            if(IsCompressed)
+            if (IsCompressed)
             {
                 m_width = 0;
                 m_height = 0;
                 m_nonCompressedData = null;
                 m_compressedData = null;
 
-                if(nativeValue.Width > 0 && nativeValue.Data != IntPtr.Zero)
-                    m_compressedData = MemoryHelper.FromNativeArray<byte>(nativeValue.Data, (int) nativeValue.Width);
+                if (nativeValue.Width > 0 && nativeValue.Data != IntPtr.Zero)
+                    m_compressedData = MemoryHelper.FromNativeArray<byte>(nativeValue.Data, (int)nativeValue.Width);
 
                 m_compressedFormatHint = nativeValue.GetFormatHint();
             }
@@ -273,12 +273,12 @@ namespace Assimp
                 m_compressedFormatHint = null;
                 m_nonCompressedData = null;
 
-                m_width = (int) nativeValue.Width;
-                m_height = (int) nativeValue.Height;
+                m_width = (int)nativeValue.Width;
+                m_height = (int)nativeValue.Height;
 
                 int size = m_width * m_height;
 
-                if(size > 0 && nativeValue.Data != IntPtr.Zero)
+                if (size > 0 && nativeValue.Data != IntPtr.Zero)
                     m_nonCompressedData = MemoryHelper.FromNativeArray<Texel>(nativeValue.Data, size);
             }
         }
@@ -290,15 +290,15 @@ namespace Assimp
         /// <param name="freeNative">True if the unmanaged memory should be freed, false otherwise.</param>
         public static void FreeNative(IntPtr nativeValue, bool freeNative)
         {
-            if(nativeValue == IntPtr.Zero)
+            if (nativeValue == IntPtr.Zero)
                 return;
 
             AiTexture aiTexture = MemoryHelper.Read<AiTexture>(nativeValue);
 
-            if(aiTexture.Width > 0 && aiTexture.Data != IntPtr.Zero)
+            if (aiTexture.Width > 0 && aiTexture.Data != IntPtr.Zero)
                 MemoryHelper.FreeMemory(aiTexture.Data);
 
-            if(freeNative)
+            if (freeNative)
                 MemoryHelper.FreeMemory(nativeValue);
         }
 

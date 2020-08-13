@@ -71,12 +71,12 @@ namespace Assimp.Sample
             Matrix4 prev = trafo;
             trafo = Matrix4.Mult(prev, FromMatrix(node.Transform));
 
-            if(node.HasMeshes)
+            if (node.HasMeshes)
             {
-                foreach(int index in node.MeshIndices)
+                foreach (int index in node.MeshIndices)
                 {
                     Mesh mesh = m_model.Meshes[index];
-                    for(int i = 0; i < mesh.VertexCount; i++)
+                    for (int i = 0; i < mesh.VertexCount; i++)
                     {
                         Vector3 tmp = FromVector(mesh.Vertices[i]);
                         Vector3.Transform(ref tmp, ref trafo, out tmp);
@@ -92,7 +92,7 @@ namespace Assimp.Sample
                 }
             }
 
-            for(int i = 0; i < node.ChildCount; i++)
+            for (int i = 0; i < node.ChildCount; i++)
             {
                 ComputeBoundingBox(node.Children[i], ref min, ref max, ref trafo);
             }
@@ -109,12 +109,12 @@ namespace Assimp.Sample
         {
             base.OnUpdateFrame(e);
 
-            m_angle += 25f * (float) e.Time;
-            if(m_angle > 360)
+            m_angle += 25f * (float)e.Time;
+            if (m_angle > 360)
             {
                 m_angle = 0.0f;
             }
-            if(Keyboard[OpenTK.Input.Key.Escape])
+            if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
             }
@@ -126,7 +126,7 @@ namespace Assimp.Sample
 
             GL.Viewport(0, 0, Width, Height);
 
-            float aspectRatio = Width / (float) Height;
+            float aspectRatio = Width / (float)Height;
             Matrix4 perspective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspectRatio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref perspective);
@@ -160,7 +160,7 @@ namespace Assimp.Sample
 
             GL.Translate(-m_sceneCenter);
 
-            if(m_displayList == 0)
+            if (m_displayList == 0)
             {
                 m_displayList = GL.GenLists(1);
                 GL.NewList(m_displayList, ListMode.Compile);
@@ -180,14 +180,14 @@ namespace Assimp.Sample
             GL.PushMatrix();
             GL.MultMatrix(ref m);
 
-            if(node.HasMeshes)
+            if (node.HasMeshes)
             {
-                foreach(int index in node.MeshIndices)
+                foreach (int index in node.MeshIndices)
                 {
                     Mesh mesh = scene.Meshes[index];
                     ApplyMaterial(scene.Materials[mesh.MaterialIndex]);
 
-                    if(mesh.HasNormals)
+                    if (mesh.HasNormals)
                     {
                         GL.Enable(EnableCap.Lighting);
                     }
@@ -197,7 +197,7 @@ namespace Assimp.Sample
                     }
 
                     bool hasColors = mesh.HasVertexColors(0);
-                    if(hasColors)
+                    if (hasColors)
                     {
                         GL.Enable(EnableCap.ColorMaterial);
                     }
@@ -208,10 +208,10 @@ namespace Assimp.Sample
 
                     bool hasTexCoords = mesh.HasTextureCoords(0);
 
-                    foreach(Face face in mesh.Faces)
+                    foreach (Face face in mesh.Faces)
                     {
                         BeginMode faceMode;
-                        switch(face.IndexCount)
+                        switch (face.IndexCount)
                         {
                             case 1:
                                 faceMode = BeginMode.Points;
@@ -228,19 +228,19 @@ namespace Assimp.Sample
                         }
 
                         GL.Begin(faceMode);
-                        for(int i = 0; i < face.IndexCount; i++)
+                        for (int i = 0; i < face.IndexCount; i++)
                         {
                             int indice = face.Indices[i];
-                            if(hasColors)
+                            if (hasColors)
                             {
                                 Color4 vertColor = FromColor(mesh.VertexColorChannels[0][indice]);
                             }
-                            if(mesh.HasNormals)
+                            if (mesh.HasNormals)
                             {
                                 Vector3 normal = FromVector(mesh.Normals[indice]);
                                 GL.Normal3(normal);
                             }
-                            if(hasTexCoords)
+                            if (hasTexCoords)
                             {
                                 Vector3 uvw = FromVector(mesh.TextureCoordinateChannels[0][indice]);
                                 GL.TexCoord2(uvw.X, 1 - uvw.Y);
@@ -253,7 +253,7 @@ namespace Assimp.Sample
                 }
             }
 
-            for(int i = 0; i < node.ChildCount; i++)
+            for (int i = 0; i < node.ChildCount; i++)
             {
                 RecursiveRender(m_model, node.Children[i]);
             }
@@ -262,7 +262,7 @@ namespace Assimp.Sample
         private void LoadTexture(String fileName)
         {
             fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName);
-            if(!File.Exists(fileName))
+            if (!File.Exists(fileName))
             {
                 return;
             }
@@ -280,42 +280,42 @@ namespace Assimp.Sample
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, TextureData.Scan0);
             textureBitmap.UnlockBits(TextureData);
 
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
         }
 
         private void ApplyMaterial(Material mat)
         {
-            if(mat.GetMaterialTextureCount(TextureType.Diffuse) > 0)
+            if (mat.GetMaterialTextureCount(TextureType.Diffuse) > 0)
             {
                 TextureSlot tex;
-                if(mat.GetMaterialTexture(TextureType.Diffuse, 0, out tex))
+                if (mat.GetMaterialTexture(TextureType.Diffuse, 0, out tex))
                     LoadTexture(tex.FilePath);
             }
 
             Color4 color = new Color4(.8f, .8f, .8f, 1.0f);
-            if(mat.HasColorDiffuse)
+            if (mat.HasColorDiffuse)
             {
                 // color = FromColor(mat.ColorDiffuse);
             }
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Diffuse, color);
 
             color = new Color4(0, 0, 0, 1.0f);
-            if(mat.HasColorSpecular)
+            if (mat.HasColorSpecular)
             {
                 color = FromColor(mat.ColorSpecular);
             }
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Specular, color);
 
             color = new Color4(.2f, .2f, .2f, 1.0f);
-            if(mat.HasColorAmbient)
+            if (mat.HasColorAmbient)
             {
                 color = FromColor(mat.ColorAmbient);
             }
             GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Ambient, color);
 
             color = new Color4(0, 0, 0, 1.0f);
-            if(mat.HasColorEmissive)
+            if (mat.HasColorEmissive)
             {
                 color = FromColor(mat.ColorEmissive);
             }
@@ -323,11 +323,11 @@ namespace Assimp.Sample
 
             float shininess = 1;
             float strength = 1;
-            if(mat.HasShininess)
+            if (mat.HasShininess)
             {
                 shininess = mat.Shininess;
             }
-            if(mat.HasShininessStrength)
+            if (mat.HasShininessStrength)
             {
                 strength = mat.ShininessStrength;
             }

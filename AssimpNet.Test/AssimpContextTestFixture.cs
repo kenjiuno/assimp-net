@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Copyright (c) 2012-2014 AssimpNet - Nicholas Woodfield
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -108,18 +108,18 @@ namespace Assimp.Test
             Mesh importedTriangle = importedScene.Meshes[0];
 
             Assert.IsTrue(importedTriangle.VertexCount == triangle.VertexCount);
-            for(int i = 0; i < importedTriangle.VertexCount; i++)
+            for (int i = 0; i < importedTriangle.VertexCount; i++)
             {
                 Assert.IsTrue(importedTriangle.Vertices[i].Equals(triangle.Vertices[i]));
             }
 
             Assert.IsTrue(importedTriangle.FaceCount == triangle.FaceCount);
-            for(int i = 0; i < importedTriangle.FaceCount; i++)
+            for (int i = 0; i < importedTriangle.FaceCount; i++)
             {
                 Face importedFace = importedTriangle.Faces[i];
                 Face face = triangle.Faces[i];
 
-                for(int j = 0; j < importedFace.IndexCount; j++)
+                for (int j = 0; j < importedFace.IndexCount; j++)
                 {
                     Assert.IsTrue(importedFace.Indices[j] == face.Indices[j]);
                 }
@@ -190,7 +190,7 @@ namespace Assimp.Test
             AssimpContext importer = new AssimpContext();
             LogStream.IsVerboseLoggingEnabled = true;
 
-            LogStream logstream = new LogStream(delegate(String msg, String userData)
+            LogStream logstream = new LogStream(delegate (String msg, String userData)
             {
                 Console.WriteLine(msg);
             });
@@ -224,12 +224,12 @@ namespace Assimp.Test
 
                 logstream.Attach();
 
-                Scene scene = importer.ImportFileFromMemory(new IntPtr(ptr), (uint) memory.Length, ".dae");
+                Scene scene = importer.ImportFileFromMemory(new IntPtr(ptr), (uint)memory.Length, ".dae");
 
                 Assert.IsNotNull(scene);
                 Assert.IsTrue((scene.SceneFlags & SceneFlags.Incomplete) != SceneFlags.Incomplete);
             }
-           
+
         }
 
         [Test]
@@ -298,7 +298,7 @@ namespace Assimp.Test
         [Test]
         public void TestLoadFreeLibrary()
         {
-            if(AssimpLibrary.Instance.IsLibraryLoaded)
+            if (AssimpLibrary.Instance.IsLibraryLoaded)
                 AssimpLibrary.Instance.FreeLibrary();
 
             AssimpLibrary.Instance.LoadLibrary();
